@@ -351,9 +351,7 @@
                     form.reset();
                     showMessage('success', '✅ تم تسجيلك بنجاح! سيصلك إشعار عند الإطلاق إن شاء الله.');
                     if (result.totalRegistrations) animateCounter('counterReg', result.totalRegistrations, 1200);
-                } else {
-                    showMessage('error', '❌ ' + (result.error || 'حدث خطأ غير معروف. حاول مرة أخرى.'));
-                }
+                } 
             } catch (err) {
                 console.error('❌ فشل الإرسال:', err);
                 showMessage('error', '❌ فشل الاتصال بالخادم. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.');
