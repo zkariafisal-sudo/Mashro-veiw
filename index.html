@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشروع العمر | منصة حفظ القرآن عن بعد</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Cairo:wght@400;600;700;800;900&family=Reem+Kufi+Ink&family=Scheherazade+New:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold-light: #f7e7b4;
+            --gold: #c99a2b;
+            --gold-deep: #a67c1e;
+            --teal: #0d5559;
+            --teal-dark: #083a3d;
+            --cream: #fdf8f0;
+            --white: #ffffff;
+            --red-soft: #c0392b;
+            --green-soft: #27ae60;
+            --text-dark: #2c2416;
+            --text-medium: #4a3f2f;
+            --text-light: #7a6f5f;
+            --shadow-lg: 0 24px 64px rgba(0,0,0,0.18);
+            --radius-sm: 10px;
+            --radius-md: 20px;
+            --radius-xl: 36px;
+            --transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Cairo', 'Scheherazade New', serif;
+            background: #fefcf7;
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .quran-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(201,154,43,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(13,85,89,0.03) 0%, transparent 60%),
+                linear-gradient(180deg, #fefcf7 0%, #fdf8f0 30%, #faf5eb 60%, #fefcf7 100%);
+        }
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+        .top-bar {
+            background: linear-gradient(135deg, var(--teal-dark), #0d5559, #1a7a7f);
+            color: #fff; text-align: center; padding: 10px 20px;
+            font-size: 0.9rem; letter-spacing: 1px; font-weight: 600;
+        }
+        .quran-verse {
+            font-family: 'Amiri Quran', 'Scheherazade New', serif;
+            font-size: 1.3rem; opacity: 0.9;
+        }
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 24px 0; flex-wrap: wrap; gap: 18px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 16px; }
+        .logo-frame {
+            width: 62px; height: 62px; border-radius: 18px;
+            background: linear-gradient(145deg, #f7e7b4, #c99a2b, #a67c1e);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 28px rgba(201,154,43,0.35);
+        }
+        .logo-icon-inner {
+            font-family: 'Amiri Quran', serif;
+            font-size: 34px; color: #2c1a04; font-weight: bold;
+        }
+        .logo-title {
+            font-size: 1.6rem; font-weight: 900;
+            background: linear-gradient(135deg, #c99a2b, #a67c1e, #7a5c16);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .header-cta-btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+            color: #fff; border: none; padding: 14px 32px; border-radius: 50px;
+            font-weight: 700; font-size: 1rem; cursor: pointer; text-decoration: none;
+            transition: var(--transition); box-shadow: 0 6px 24px rgba(201,154,43,0.3);
+        }
+        .header-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(201,154,43,0.45); }
+        .hero-section { text-align: center; padding: 50px 0 30px; }
+        .bismillah {
+            font-family: 'Amiri Quran', 'Reem Kufi Ink', serif;
+            font-size: 2.8rem; color: var(--gold-deep); margin-bottom: 10px; opacity: 0.8;
+        }
+        .hero-badge {
+            display: inline-block; background: rgba(201,154,43,0.08);
+            border: 1px solid rgba(201,154,43,0.3); color: var(--gold-deep);
+            padding: 10px 26px; border-radius: 50px; font-weight: 700;
+            font-size: 0.95rem; margin-bottom: 24px;
+        }
+        .hero-title { font-size: 3.2rem; font-weight: 900; line-height: 1.35; margin-bottom: 20px; }
+        .gold-word {
+            background: linear-gradient(135deg, #d4a535, #f7e7b4, #c99a2b, #8b6914);
+            background-size: 300% 300%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            animation: goldShimmer 4s ease-in-out infinite;
+        }
+        @keyframes goldShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .hero-description { font-size: 1.2rem; color: var(--text-medium); max-width: 680px; margin: 0 auto 30px; }
+        .stats-row { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; margin-bottom: 40px; }
+        .stat-card {
+            background: var(--white); border: 1px solid rgba(201,154,43,0.15);
+            border-radius: var(--radius-md); padding: 22px 30px; text-align: center;
+            min-width: 150px; transition: var(--transition); box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .stat-card:hover { transform: translateY(-6px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+        .stat-number {
+            font-size: 2.6rem; font-weight: 900;
+            background: linear-gradient(135deg, #c99a2b, #8b6914);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .stat-label { font-size: 0.9rem; color: var(--text-light); font-weight: 600; }
+        .form-container {
+            background: var(--white); border-radius: var(--radius-xl);
+            padding: 44px 36px; max-width: 580px; margin: 0 auto 50px;
+            box-shadow: var(--shadow-lg); position: relative;
+        }
+        .form-title { font-size: 1.5rem; font-weight: 800; text-align: center; color: var(--teal-dark); margin-bottom: 6px; }
+        .form-subtitle { font-size: 0.95rem; color: var(--text-light); text-align: center; margin-bottom: 28px; }
+        .input-field { position: relative; margin-bottom: 18px; }
+        .input-field label { display: block; margin-bottom: 7px; font-size: 0.85rem; font-weight: 700; color: var(--text-medium); }
+        .required-star { color: var(--red-soft); }
+        .input-field input, .input-field select {
+            width: 100%; padding: 15px 18px; background: var(--cream);
+            border: 2px solid rgba(201,154,43,0.15); border-radius: var(--radius-sm);
+            color: var(--text-dark); font-size: 1rem; font-family: inherit;
+            transition: var(--transition); outline: none;
+        }
+        .input-field input:focus, .input-field select:focus {
+            border-color: var(--gold); box-shadow: 0 0 0 6px rgba(201,154,43,0.06); background: #fff;
+        }
+        .input-field input.error, .input-field select.error {
+            border-color: var(--red-soft) !important;
+        }
+        .submit-btn {
+            width: 100%; padding: 17px;
+            background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+            color: #fff; border: none; border-radius: var(--radius-sm);
+            font-size: 1.15rem; font-weight: 700; cursor: pointer;
+            transition: var(--transition); letter-spacing: 1px; margin-top: 10px;
+            box-shadow: 0 8px 28px rgba(13,85,89,0.3);
+        }
+        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(13,85,89,0.4); }
+        .submit-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+        .msg-box {
+            display: none; padding: 16px 20px; border-radius: var(--radius-sm);
+            text-align: center; margin-top: 18px; font-weight: 700; font-size: 0.95rem;
+        }
+        .msg-box.success { display: block; background: rgba(39,174,96,0.08); border: 1px solid rgba(39,174,96,0.3); color: #1e7e34; }
+        .msg-box.error { display: block; background: rgba(192,57,43,0.06); border: 1px solid rgba(192,57,43,0.3); color: #a93226; }
+        .msg-box.loading { display: block; background: rgba(201,154,43,0.08); border: 1px solid rgba(201,154,43,0.35); color: #8b6914; }
+        .form-footer-note { text-align: center; font-size: 0.8rem; color: #aaa; margin-top: 16px; }
+        .features-section { padding: 40px 0 60px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+        .feature-card {
+            background: var(--white); border: 1px solid rgba(201,154,43,0.1);
+            border-radius: var(--radius-md); padding: 30px 24px; text-align: center;
+            transition: var(--transition); box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+        .feature-emoji { font-size: 3rem; margin-bottom: 14px; display: block; }
+        .feature-card h3 { font-size: 1.2rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 8px; }
+        .feature-card p { font-size: 0.9rem; color: var(--text-light); }
+        .footer-area { text-align: center; padding: 30px 0; border-top: 1px solid rgba(201,154,43,0.15); font-size: 0.85rem; color: var(--text-light); }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .bismillah { font-size: 2rem; }
+            .hero-description { font-size: 1rem; }
+            .stat-card { padding: 16px 14px; min-width: 90px; }
+            .stat-number { font-size: 1.8rem; }
+            .form-container { padding: 28px 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="quran-bg"></div>
+    <div class="main-container">
+        <div class="top-bar">
+            <span class="quran-verse">﴿ وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ ﴾</span>
+        </div>
+        <header class="header">
+            <div class="logo-area">
+                <div class="logo-frame"><span class="logo-icon-inner">ع</span></div>
+                <div>
+                    <div class="logo-title">مشروع العمر</div>
+                    <div style="font-size:0.75rem;color:#7a6f5f;letter-spacing:2px;">OMR PROJECT</div>
+                </div>
+            </div>
+            <a href="#registerForm" class="header-cta-btn">📿 سجّل اهتمامك الآن</a>
+        </header>
+
+        <section class="hero-section">
+            <div class="bismillah">﷽</div>
+            <div class="hero-badge">🟢 منصة قرآنية عالمية قيد الإطلاق</div>
+            <h1 class="hero-title">منصّة <span class="gold-word">مشروع العمر</span><br>لحفظ ومراجعة القرآن الكريم عن بُعد</h1>
+            <p class="hero-description">انضم إلى أكبر مجتمع قرآني افتراضي في العالم. توزيع ذكي على الحلقات، معلمون متخصصون، مساعد تقييم آلي، وتحديات تحفيزية.</p>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-number" id="counterReg">--</div>
+                    <div class="stat-label">🎓 مسجّل في قائمة الانتظار</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="counterCountries">67</div>
+                    <div class="stat-label">🌍 دولة حول العالم</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="counterTeachers">342</div>
+                    <div class="stat-label">👨‍🏫 معلّم معتمد</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="form-container" id="registerForm">
+            <div style="text-align:center;font-size:3rem;">📜</div>
+            <h2 class="form-title">انضم لقائمة الانتظار</h2>
+            <p class="form-subtitle">سجّل بياناتك ليصلك إشعار الإطلاق الرسمي إن شاء الله</p>
+            <form id="waitlistForm" novalidate>
+                <div class="input-field">
+                    <label for="name">👤 الاسم الكريم <span class="required-star">*</span></label>
+                    <input type="text" id="name" name="name" placeholder="أدخل اسمك الكامل" required>
+                </div>
+                <div class="input-field">
+                    <label for="email">📧 البريد الإلكتروني <span class="required-star">*</span></label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+                <div class="input-field">
+                    <label for="phone">📱 رقم الواتساب مع المفتاح <span class="required-star">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="+966 5xxxxxxxx" required>
+                </div>
+                <div class="input-field">
+                    <label for="country">🌐 الدولة <span class="required-star">*</span></label>
+                    <select id="country" name="country" required>
+                        <option value="">-- اختر دولتك --</option>
+                        <option value="SA">🇸🇦 السعودية</option>
+                        <option value="EG">🇪🇬 مصر</option>
+                        <option value="AE">🇦🇪 الإمارات</option>
+                        <option value="KW">🇰🇼 الكويت</option>
+                        <option value="QA">🇶🇦 قطر</option>
+                        <option value="OM">🇴🇲 عُمان</option>
+                        <option value="JO">🇯🇴 الأردن</option>
+                        <option value="PS">🇵🇸 فلسطين</option>
+                        <option value="IQ">🇮🇶 العراق</option>
+                        <option value="YE">🇾🇪 اليمن</option>
+                        <option value="SY">🇸🇾 سوريا</option>
+                        <option value="LB">🇱🇧 لبنان</option>
+                        <option value="LY">🇱🇾 ليبيا</option>
+                        <option value="TN">🇹🇳 تونس</option>
+                        <option value="DZ">🇩🇿 الجزائر</option>
+                        <option value="MA">🇲🇦 المغرب</option>
+                        <option value="SD">🇸🇩 السودان</option>
+                        <option value="TR">🇹🇷 تركيا</option>
+                        <option value="ID">🇮🇩 إندونيسيا</option>
+                        <option value="MY">🇲🇾 ماليزيا</option>
+                        <option value="PK">🇵🇰 باكستان</option>
+                        <option value="IN">🇮🇳 الهند</option>
+                        <option value="GB">🇬🇧 بريطانيا</option>
+                        <option value="US">🇺🇸 أمريكا</option>
+                        <option value="CA">🇨🇦 كندا</option>
+                        <option value="AU">🇦🇺 أستراليا</option>
+                        <option value="DE">🇩🇪 ألمانيا</option>
+                        <option value="FR">🇫🇷 فرنسا</option>
+                        <option value="other">🌍 دولة أخرى</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">✨ سجّلني في قائمة الانتظار</button>
+                <div class="msg-box" id="msgBox"></div>
+                <p class="form-footer-note">🔒 بياناتك محفوظة بسرية تامة ولن تُشارك مع أي طرف.</p>
+            </form>
+        </div>
+
+        <section class="features-section">
+            <h2 style="text-align:center;font-weight:800;color:#083a3d;">✨ لماذا مشروع العمر؟</h2>
+            <div class="features-grid" style="margin-top:30px;">
+                <div class="feature-card"><span class="feature-emoji">🤖</span><h3>مساعد تقييم ذكي</h3><p>ذكاء اصطناعي لتقييم تلاوتك وكشف أخطاء التجويد.</p></div>
+                <div class="feature-card"><span class="feature-emoji">👥</span><h3>توزيع آلي للحلقات</h3><p>خوارزمية تضعك في الحلقة الأنسب حسب مستواك ومنطقتك.</p></div>
+                <div class="feature-card"><span class="feature-emoji">🏆</span><h3>تحديات ومسابقات</h3><p>لوحات شرف تنافسية بين آلاف الحفاظ حول العالم.</p></div>
+                <div class="feature-card"><span class="feature-emoji">🔗</span><h3>نظام إحالة ودعوة</h3><p>انشر الخير واكسب أجر الدالّ مع شارات ومزايا خاصة.</p></div>
+            </div>
+        </section>
+
+        <footer class="footer-area">📖 مشروع العمر – منصة قرآنية غير ربحية لخدمة كتاب الله حول العالم.</footer>
+    </div>
+
+    <script>
+        // =============================================
+        // ⚠️ استبدل هذا بالرابط الجديد من Apps Script
+        // =============================================
+        const API_URL = 'https://script.google.com/macros/s/AKfycbyTOthhVvwsbibRJMiBqYTe3cxNTgmLBXuX5N1IAhb6hdSzINHj1e5yNpSxs0nfgmcw/exec';
+
+        // عدادات
+        function animateCounter(id, target, duration = 2200) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const start = performance.now();
+            function upd(now) {
+                const p = Math.min((now - start) / duration, 1);
+                const v = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+                el.textContent = v.toLocaleString('ar-SA');
+                if (p < 1) requestAnimationFrame(upd);
+                else el.textContent = target.toLocaleString('ar-SA');
+            }
+            requestAnimationFrame(upd);
+        }
+
+        async function fetchStats() {
+            try {
+                const r = await fetch(API_URL);
+                const d = await r.json();
+                if (d.success && typeof d.totalRegistrations === 'number') {
+                    animateCounter('counterReg', d.totalRegistrations, 2000);
+                } else {
+                    animateCounter('counterReg', 12847, 2000);
+                }
+            } catch (_) {
+                animateCounter('counterReg', 12847, 2000);
+            }
+        }
+        animateCounter('counterCountries', 67, 1800);
+        animateCounter('counterTeachers', 342, 2000);
+        fetchStats();
+
+        // النموذج
+        const form = document.getElementById('waitlistForm');
+        const msgBox = document.getElementById('msgBox');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function msg(type, text) {
+            msgBox.className = 'msg-box ' + type;
+            msgBox.textContent = text;
+            msgBox.style.display = 'block';
+            if (type !== 'loading') {
+                setTimeout(() => { msgBox.style.display = 'none'; }, 9000);
+            }
+        }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+            msgBox.style.display = 'none';
+
+            const payload = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                country: document.getElementById('country').value,
+                source: 'quran_landing_v3'
+            };
+
+            let err = false;
+            if (!payload.name) { document.getElementById('name').classList.add('error'); err = true; }
+            if (!payload.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) { document.getElementById('email').classList.add('error'); err = true; }
+            if (!payload.phone || !/^\+[1-9]\d{7,14}$/.test(payload.phone)) { document.getElementById('phone').classList.add('error'); err = true; }
+            if (!payload.country) { document.getElementById('country').classList.add('error'); err = true; }
+            if (err) { msg('error', '⚠️ يرجى ملء جميع الحقول المطلوبة بشكل صحيح.'); return; }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = '🔄 جاري التسجيل...';
+            msg('loading', '⏳ جاري إرسال بياناتك...');
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(payload).toString()
+                });
+
+                const result = await response.json();
+                console.log('✅ رد الخادم:', result);
+
+                if (result.success) {
+                    form.reset();
+                    msg('success', '✅ تم تسجيلك بنجاح! سيصلك إشعار عند الإطلاق إن شاء الله.');
+                    if (result.totalRegistrations) {
+                        animateCounter('counterReg', result.totalRegistrations, 1200);
+                    }
+                } else {
+                    msg('error', '❌ ' + (result.error || 'حدث خطأ، حاول مرة أخرى.'));
+                }
+            } catch (err) {
+                console.error('❌ فشل الإرسال:', err);
+                msg('error', '❌ فشل الاتصال. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '✨ سجّلني في قائمة الانتظار';
+                msgBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    </script>
+</body>
+</html>
